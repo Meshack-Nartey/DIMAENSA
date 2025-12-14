@@ -322,6 +322,13 @@ header {
   min-width: 0;
 }
 
+/* Tighter spacing for About section: bring image closer to text */
+#about .split { gap: 4px; }
+
+@media (max-width: 640px) {
+  #about .split { gap: 8px; }
+}
+
 .intro-box {
   background: var(--color-white);
   border-radius: var(--radius-lg);
