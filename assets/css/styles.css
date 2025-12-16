@@ -330,7 +330,11 @@ header {
 }
 
 /* Tighter spacing for About section: bring image closer to text */
-#about .split { gap: 12px; }
+#about .split { 
+  gap: 4px;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
 /* About section centering */
 .about-center {
@@ -363,10 +367,6 @@ header {
   
   .about-logo {
     max-width: 260px;
-  }
-  
-  #about .split {
-    gap: 20px;
   }
   
   #about .reveal:last-child {
