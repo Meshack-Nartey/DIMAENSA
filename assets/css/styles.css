@@ -59,6 +59,11 @@ img {
   margin: 0 auto;
 }
 
+#about .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 header {
   position: sticky;
   top: 0;
@@ -225,6 +230,8 @@ header {
 
 .section {
   padding: 72px 0;
+  /* Ensure section titles are visible beneath sticky header on anchor jumps */
+  scroll-margin-top: 90px;
 }
 
 .section-heading {
@@ -323,10 +330,70 @@ header {
 }
 
 /* Tighter spacing for About section: bring image closer to text */
-#about .split { gap: 4px; }
+#about .split { gap: 12px; }
 
-@media (max-width: 640px) {
-  #about .split { gap: 8px; }
+/* About section centering */
+.about-center {
+  justify-items: center;
+  text-align: center;
+}
+
+.about-logo {
+  margin: 0 auto;
+  max-width: 260px;
+}
+
+/* Center text blocks (Visit, Contact, etc.) */
+.center-block {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+/* Desktop refinements for About section (≥1024px) */
+@media (min-width: 1024px) {
+  #about {
+    padding-top: 40px;
+    margin-top: -12px;
+  }
+  
+  .about-logo {
+    max-width: 260px;
+  }
+  
+  #about .split {
+    gap: 20px;
+  }
+  
+  #about .reveal:last-child {
+    max-width: 520px;
+  }
+  
+  #about h2 {
+    font-size: 36px;
+  }
+}
+
+/* Mobile centering for About section */
+@media (max-width: 768px) {
+  .about-center {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .about-logo {
+    max-width: 250px;
+    width: 100%;
+  }
+  
+  .center-text {
+    text-align: center !important;
+  }
 }
 
 .intro-box {
@@ -390,6 +457,11 @@ header {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 16px;
+}
+
+/* Lift the menu download card slightly upward */
+#menu .card {
+  margin-top: -14px;
 }
 
 .menu-card {
