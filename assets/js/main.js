@@ -9,6 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Close mobile menu when a navigation link is clicked
+  if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        if (navToggle) {
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
