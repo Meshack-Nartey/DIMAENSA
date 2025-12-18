@@ -36,6 +36,7 @@
   to = "/index.html"
   status = 200
   force = false
+  conditions = { NOT = [{ path = "/.netlify/*" }] }
 
 [notifications]
   [[notifications.form_submission]]
