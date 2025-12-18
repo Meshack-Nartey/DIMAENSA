@@ -36,3 +36,9 @@
   to = "/index.html"
   status = 200
   force = false
+
+[notifications]
+  [[notifications.form_submission]]
+    handlers = [
+      { handler = "email", action = "notify", email_to = "aethelisgh@gmail.com" }
+    ]
