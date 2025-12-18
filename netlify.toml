@@ -32,11 +32,15 @@
     Content-Disposition = "inline"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/"
+  to = "/home.html"
   status = 200
   force = false
-  conditions = { NOT = [{ method = "POST" }, { path = "/.netlify/*" }] }
+
+[[redirects]]
+  from = "/*"
+  to = "/home.html"
+  status = 404
 
 [notifications]
   [[notifications.form_submission]]
