@@ -354,6 +354,11 @@ header {
   text-align: center;
 }
 
+/* Left-align contact details while keeping heading centered */
+#contact .center-block > p {
+  text-align: left;
+}
+
 .center-text {
   text-align: center;
 }
