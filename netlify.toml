@@ -42,8 +42,4 @@
   to = "/home.html"
   status = 404
 
-[notifications]
-  [[notifications.form_submission]]
-    handlers = [
-      { handler = "email", action = "notify", email_to = "aethelisgh@gmail.com" }
-    ]
+## Notifications removed: disable email alerts on form submissions

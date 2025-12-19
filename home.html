@@ -272,13 +272,16 @@
             <form
               id="reservation-form"
               class="form form-grid"
-              name="reservation"
               method="POST"
-              netlify
+              action="https://formsubmit.co/aethelisgh@gmail.com"
             >
+              <input type="hidden" name="_subject" value="New Table Reservation">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_next" value="thank-you.html">
               <div class="form-group">
                 <label for="full-name">Full Name</label>
-                <input type="text" id="full-name" name="full-name" required />
+                <input type="text" id="full-name" name="name" required />
               </div>
               <div class="form-group">
                 <label for="phone">Phone Number</label>
@@ -294,7 +297,7 @@
               </div>
               <div class="form-group">
                 <label for="guests">Number of Guests</label>
-                <select id="guests" name="guests" required>
+                <select id="guests" name="number_of_guests" required>
                   <option value="">Select</option>
                   <option>1</option>
                   <option>2</option>
@@ -308,7 +311,7 @@
                 <label for="request">Special Request (optional)</label>
                 <textarea
                   id="request"
-                  name="request"
+                  name="special_requests"
                   placeholder="Allergies, celebrations, seating preferences..."
                 ></textarea>
               </div>

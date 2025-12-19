@@ -31,14 +31,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  const reservationForm = document.querySelector('#reservation-form');
-  if (reservationForm) {
-    reservationForm.addEventListener('submit', (e) => {
-      const msg = reservationForm.querySelector('.success-message');
-      if (msg) {
-        msg.style.display = 'block';
-        msg.textContent = 'Thank you! Your reservation request has been received.';
-      }
-    });
-  }
+  // Reservation form success overlay removed per request
 });

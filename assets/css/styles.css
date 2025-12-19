@@ -485,6 +485,55 @@ header {
   max-width: 640px;
 }
 
+/* Center the Reservations section: stack text above form and center them */
+#reservations {
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial glow behind the reservation form */
+#reservations::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 22%;
+  transform: translateX(-50%);
+  width: min(900px, 85%);
+  height: 68%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 169, 126, 0.22) 0%,
+    rgba(200, 169, 126, 0.13) 40%,
+    rgba(139, 94, 60, 0.08) 70%,
+    transparent 100%
+  );
+  filter: blur(18px);
+  z-index: 0;
+}
+
+#reservations .split {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+#reservations .center-block {
+  text-align: center;
+}
+
+#reservations .form {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
 /* Two-column responsive layout for reservation form */
 #reservation-form.form-grid {
   display: grid;
