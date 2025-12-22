@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Order delicious Ghanaian food from Dimaensa Restaurant - quick ordering and delivery"
+    />
+    <title>Order Online | Dimaensa Restaurant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="assets/css/styles.css?v=2025-12-19-1" />
+    <link rel="stylesheet" href="assets/css/order.css" />
+    <link rel="icon" type="image/jpeg" href="assets/img/logo2.jpg" />
+    <meta name="theme-color" content="#8B4513" />
+  </head>
+  <body>
+    <header>
+      <div class="container navbar">
+        <div class="brand">
+          <img
+            src="assets/img/logo2-removebg-preview.png"
+            alt="Dimaensa Restaurant Logo"
+            class="logo"
+            style="height: 50px; width: auto"
+          />
+          <span>Dimaensa Restaurant</span>
+        </div>
+        <button
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <nav class="nav-links">
+          <a href="home.html">Home</a>
+          <a href="home.html#menu">Menu</a>
+          <a
+            href="order.html"
+            style="color: var(--color-primary); font-weight: 700"
+            >Order Online</a
+          >
+          <a href="home.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="order-hero">
+        <div class="container">
+          <h1>Order Your Favorite Ghanaian Dishes</h1>
+          <p>Quick ordering, fast delivery to your doorstep</p>
+        </div>
+      </section>
+
+      <section class="section" id="order-section">
+        <div class="container">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 32px;
+              min-width: 0;
+            "
+          >
+            <!-- Menu Items Column -->
+            <div class="order-menu-column">
+              <h2>Food Menu</h2>
+              <div class="order-menu-items" id="menu-items">
+                <!-- Items will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Cart Column (Sticky) -->
+            <div class="order-cart-wrapper">
+              <div class="order-cart sticky-cart">
+                <h2>Your Order</h2>
+                <div class="cart-items" id="cart-items">
+                  <p class="empty-cart">No items in cart</p>
+                </div>
+                <div class="cart-summary">
+                  <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">¢0</span>
+                  </div>
+                  <div class="summary-row delivery-fee">
+                    <span>Delivery Fee:</span>
+                    <span id="delivery-fee">¢5</span>
+                  </div>
+                  <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">¢5</span>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-primary"
+                  id="checkout-btn"
+                  style="width: 100%; margin-top: 16px"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Checkout Modal -->
+      <div id="checkout-modal" class="modal hidden">
+        <div class="modal-content">
+          <button class="modal-close" aria-label="Close">×</button>
+
+          <h2>Checkout</h2>
+
+          <!-- Delivery Information -->
+          <div class="checkout-section">
+            <h3>Delivery Address</h3>
+            <form id="delivery-form" class="form form-grid">
+              <div class="form-group full-span">
+                <label for="customer-name">Full Name *</label>
+                <input type="text" id="customer-name" required />
+              </div>
+              <div class="form-group">
+                <label for="customer-phone">Phone Number *</label>
+                <input type="tel" id="customer-phone" required />
+              </div>
+              <div class="form-group">
+                <label for="customer-email">Email</label>
+                <input type="email" id="customer-email" />
+              </div>
+              <div class="form-group full-span">
+                <label for="customer-address">Delivery Address *</label>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <textarea
+                    id="customer-address"
+                    required
+                    placeholder="Type your address or tap Share My Location"
+                    style="resize: vertical; min-height: 80px"
+                  ></textarea>
+                  <button
+                    type="button"
+                    id="location-btn"
+                    class="btn btn-ghost"
+                    style="
+                      align-self: flex-start;
+                      padding: 10px 16px;
+                      font-size: 14px;
+                    "
+                  >
+                    📍 Share My Location
+                  </button>
+                  <small style="color: #666"
+                    >Tap to allow location access, or type your address
+                    manually.</small
+                  >
+                </div>
+              </div>
+              <div class="form-group full-span">
+                <label for="special-instructions">Special Instructions</label>
+                <textarea
+                  id="special-instructions"
+                  placeholder="e.g., no onions, extra spicy, etc."
+                ></textarea>
+              </div>
+            </form>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="checkout-section">
+            <h3>Order Summary</h3>
+            <div class="checkout-items" id="checkout-items">
+              <!-- Items will be populated by JavaScript -->
+            </div>
+            <div class="checkout-summary">
+              <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="checkout-subtotal">¢0</span>
+              </div>
+              <div class="summary-row">
+                <span>Delivery Fee:</span>
+                <span id="checkout-delivery">¢5</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total:</span>
+                <span id="checkout-total">¢5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Instructions -->
+          <div class="checkout-section payment-section">
+            <h3>Payment Instructions</h3>
+            <div class="payment-methods">
+              <div class="payment-method">
+                <h4>Mobile Money Payment</h4>
+                <p class="payment-number">
+                  <strong>MTN Mobile Money:</strong> <code>0532411380</code>
+                </p>
+                <p class="payment-instruction">
+                  1. Send payment to the number above<br />
+                  2. After payment, you will receive a transaction confirmation
+                  message<br />
+                  3. Enter your Transaction ID in the form below<br />
+                  4. Your order will be confirmed and delivered
+                </p>
+              </div>
+            </div>
+
+            <form id="payment-form" class="form form-grid">
+              <div class="form-group full-span">
+                <label for="momo-number">Your Mobile Money Number *</label>
+                <input
+                  type="tel"
+                  id="momo-number"
+                  name="momo_number"
+                  placeholder="024XXXXXXX"
+                  required
+                />
+              </div>
+
+              <div class="form-group full-span">
+                <label for="transaction-id"
+                  >Transaction ID from Payment Message *</label
+                >
+                <input
+                  type="text"
+                  id="transaction-id"
+                  name="transaction_id"
+                  placeholder="e.g., MTN123456789ABC"
+                  required
+                />
+                <small style="display: block; margin-top: 6px; color: #666"
+                  >This is the confirmation code/reference number from the
+                  payment message you receive after sending payment.</small
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="delivery-type">Delivery Type *</label>
+                <select id="delivery-type" name="delivery_type" required>
+                  <option value="">Select delivery type</option>
+                  <option value="delivery">Delivery to my address</option>
+                  <option value="pickup">Pickup at restaurant</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <!-- Complete Order Button -->
+          <form
+            id="order-submission-form"
+            method="POST"
+            action="https://formsubmit.co/aethelisgh@gmail.com"
+            style="margin-top: 24px"
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Food Order from Dimaensa"
+            />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input
+              type="hidden"
+              name="_next"
+              value="https://dimaensa.netlify.app/thank-you.html"
+            />
+
+            <input
+              type="hidden"
+              id="hidden-order-items"
+              name="order_items"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-customer-name"
+              name="customer_name"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-customer-phone"
+              name="customer_phone"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-customer-email"
+              name="customer_email"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-delivery-address"
+              name="delivery_address"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-special-instructions"
+              name="special_instructions"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-momo-number"
+              name="momo_number"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-transaction-id"
+              name="transaction_id"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-delivery-type"
+              name="delivery_type"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-order-total"
+              name="order_total"
+              value=""
+            />
+            <input
+              type="hidden"
+              id="hidden-map-location"
+              name="map_location"
+              value=""
+            />
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="complete-order-btn"
+              style="width: 100%"
+            >
+              Confirm Order & Send to Restaurant
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Receipt Modal -->
+      <div id="receipt-modal" class="modal hidden">
+        <div class="modal-content receipt-content">
+          <button class="modal-close" aria-label="Close">×</button>
+
+          <div class="receipt">
+            <div class="receipt-header">
+              <img
+                src="assets/img/logo2-removebg-preview.png"
+                alt="Dimaensa Logo"
+                class="receipt-logo"
+              />
+              <h2>Dimaensa Restaurant</h2>
+              <p>Thank you for your order!</p>
+            </div>
+
+            <div class="receipt-body">
+              <div class="receipt-info">
+                <p>
+                  <strong>Order ID:</strong>
+                  <span id="receipt-order-id">ORD-000000</span>
+                </p>
+                <p><strong>Date:</strong> <span id="receipt-date">---</span></p>
+                <p>
+                  <strong>Estimated Delivery:</strong>
+                  <span id="receipt-delivery-time">30-45 minutes</span>
+                </p>
+              </div>
+
+              <div class="receipt-customer">
+                <h3>Delivery To:</h3>
+                <p id="receipt-customer-name">---</p>
+                <p id="receipt-customer-address">---</p>
+                <p id="receipt-customer-phone">---</p>
+              </div>
+
+              <div class="receipt-items">
+                <h3>Order Items:</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Qty</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="receipt-items-table">
+                    <!-- Items will be populated by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="receipt-summary">
+                <div class="summary-row">
+                  <span>Subtotal:</span>
+                  <span id="receipt-subtotal">¢0</span>
+                </div>
+                <div class="summary-row">
+                  <span>Delivery Fee:</span>
+                  <span id="receipt-delivery-fee">¢5</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Total Amount:</span>
+                  <span id="receipt-total">¢5</span>
+                </div>
+              </div>
+
+              <div class="payment-pending">
+                <h3>Payment Status: PENDING</h3>
+                <p><strong>Please complete your payment to:</strong></p>
+                <p class="payment-number">
+                  <code>0532411380</code> (MTN Mobile Money)
+                </p>
+                <p>
+                  After payment, you will receive a transaction confirmation
+                  message. Reply with the Transaction ID to confirm your order.
+                </p>
+              </div>
+
+              <div class="receipt-footer">
+                <p>We appreciate your business!</p>
+                <p>
+                  Questions? Contact us at <strong>dimaensa83@gmail.com</strong>
+                </p>
+              </div>
+            </div>
+
+            <div class="receipt-actions">
+              <button class="btn btn-primary" id="print-receipt-btn">
+                Print Receipt
+              </button>
+              <button class="btn btn-ghost" id="close-receipt-btn">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="brand">
+          <img
+            src="assets/img/logo2-removebg-preview.png"
+            alt="Dimaensa Restaurant Logo"
+            class="logo"
+            style="height: 40px; width: auto; margin-right: 8px"
+          />
+          <span>Dimaensa Restaurant</span>
+        </div>
+        <p>Authentic Ghanaian cuisine, delivered to your door.</p>
+        <div class="footer-links">
+          <a href="home.html">Back to Home</a>
+          <a href="home.html#contact">Contact Us</a>
+        </div>
+        <small>&copy; 2025 Dimaensa Restaurant. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <script src="assets/js/order.js"></script>
+
+    <script>
+      // Location sharing function
+      function getLocation() {
+        if (!navigator.geolocation) {
+          alert(
+            "Your browser does not support location services. Please enter your address manually."
+          );
+          return;
+        }
+
+        const locationBtn = document.getElementById("location-btn");
+        if (!locationBtn) return;
+        const addressInput = document.getElementById("customer-address");
+        const originalText = locationBtn.textContent;
+        locationBtn.textContent = "⏳ Getting location...";
+        locationBtn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const coordinates = `${latitude.toFixed(6)}, ${longitude.toFixed(
+              6
+            )}`;
+
+            if (addressInput) {
+              addressInput.value = coordinates;
+            }
+
+            locationBtn.textContent = "✓ Location captured!";
+            setTimeout(() => {
+              locationBtn.textContent = originalText;
+              locationBtn.disabled = false;
+            }, 2000);
+          },
+          (error) => {
+            console.error("Geolocation error:", error);
+            alert(
+              "Unable to get your location. Please check browser permissions or enter address manually."
+            );
+            locationBtn.textContent = originalText;
+            locationBtn.disabled = false;
+          }
+        );
+      }
+
+      // Handle form submission
+      document.addEventListener("DOMContentLoaded", () => {
+        const orderForm = document.getElementById("order-submission-form");
+        if (orderForm) {
+          orderForm.addEventListener("submit", (e) => {
+            // Collect form data
+            const customerName =
+              document.getElementById("customer-name")?.value || "";
+            const customerPhone =
+              document.getElementById("customer-phone")?.value || "";
+            const customerEmail =
+              document.getElementById("customer-email")?.value || "";
+            const deliveryAddress =
+              document.getElementById("customer-address")?.value || "";
+            const specialInstructions =
+              document.getElementById("special-instructions")?.value || "";
+            const momoNumber =
+              document.getElementById("momo-number")?.value || "";
+            const transactionId =
+              document.getElementById("transaction-id")?.value || "";
+            const deliveryType =
+              document.getElementById("delivery-type")?.value || "";
+
+            // Validate
+            if (
+              !customerName ||
+              !customerPhone ||
+              !deliveryAddress ||
+              !momoNumber ||
+              !transactionId ||
+              !deliveryType
+            ) {
+              e.preventDefault();
+              alert(
+                "Please fill in all required fields including Transaction ID"
+              );
+              return;
+            }
+
+            // Fill hidden fields
+            document.getElementById("hidden-customer-name").value =
+              customerName;
+            document.getElementById("hidden-customer-phone").value =
+              customerPhone;
+            document.getElementById("hidden-customer-email").value =
+              customerEmail;
+            document.getElementById("hidden-delivery-address").value =
+              deliveryAddress;
+            document.getElementById("hidden-special-instructions").value =
+              specialInstructions;
+            document.getElementById("hidden-momo-number").value = momoNumber;
+            document.getElementById("hidden-transaction-id").value =
+              transactionId;
+            document.getElementById("hidden-delivery-type").value =
+              deliveryType;
+          });
+        }
+
+        const locationBtn = document.getElementById("location-btn");
+        if (locationBtn) {
+          locationBtn.addEventListener("click", getLocation);
+        }
+      });
+    </script>
+  </body>
+</html>

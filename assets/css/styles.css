@@ -500,6 +500,12 @@ header {
   cursor: pointer;
 }
 
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .btn-primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   color: var(--color-white);
@@ -699,7 +705,7 @@ header {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  gap: 8px !important;
   min-width: 0;
 }
 
@@ -897,7 +903,7 @@ header {
 
 @media (max-width: 900px) {
   .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 6px !important; }
 }
 
 .footer {
