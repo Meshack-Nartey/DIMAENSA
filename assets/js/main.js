@@ -32,4 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Reservation form success overlay removed per request
+
+  // Menu tab switching
+  const menuTabBtns = document.querySelectorAll('.menu-tab-btn');
+  const menuTabContents = document.querySelectorAll('.menu-tab-content');
+
+  menuTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tab');
+      
+      // Remove active class from all buttons and contents
+      menuTabBtns.forEach(b => b.classList.remove('active'));
+      menuTabContents.forEach(content => content.classList.remove('active'));
+      
+      // Add active class to clicked button and corresponding content
+      btn.classList.add('active');
+      const targetContent = document.getElementById(`${targetTab}-menu`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
 });
