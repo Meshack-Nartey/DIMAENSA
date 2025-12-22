@@ -44,6 +44,42 @@ const menuItems = [
   { id: 33, name: 'Grilled Lamb Chops', price: 75, category: 'Extras' },
   { id: 34, name: 'Kelewele (Spicy Fried Plantain)', price: 25, category: 'Extras' },
   { id: 35, name: 'Fried Plantain', price: 20, category: 'Extras' },
+
+  // Drinks (match menu section)
+  { id: 36, name: 'Club (Beer)', price: 25, category: 'Beer' },
+  { id: 37, name: 'Shandy', price: 20, category: 'Beer' },
+  { id: 38, name: 'Star', price: 22, category: 'Beer' },
+  { id: 39, name: 'Gulder', price: 22, category: 'Beer' },
+  { id: 40, name: 'Origin', price: 22, category: 'Beer' },
+  { id: 41, name: 'Heineken', price: 35, category: 'Beer' },
+
+  { id: 42, name: 'Guinness', price: 20, category: 'Cider & Stout' },
+  { id: 43, name: 'Hunters', price: 40, category: 'Cider & Stout' },
+  { id: 44, name: 'Savannah', price: 40, category: 'Cider & Stout' },
+  { id: 45, name: 'Smirnoff Ice', price: 25, category: 'Cider & Stout' },
+
+  { id: 46, name: 'Palm Wine', price: 20, category: 'Local Beverages' },
+  { id: 47, name: 'Bissap (Sobolo)', price: 25, category: 'Local Beverages' },
+  { id: 48, name: 'Cocoa Drink', price: 45, category: 'Local Beverages' },
+
+  { id: 49, name: 'Malta Guinness', price: 17, category: 'Soft Drinks' },
+  { id: 50, name: 'Alvaro', price: 17, category: 'Soft Drinks' },
+  { id: 51, name: 'Fanta', price: 10, category: 'Soft Drinks' },
+  { id: 52, name: 'Coca-Cola', price: 10, category: 'Soft Drinks' },
+  { id: 53, name: 'Sprite', price: 10, category: 'Soft Drinks' },
+  { id: 54, name: 'Water', price: 4, category: 'Soft Drinks' },
+
+  { id: 55, name: 'Red Wine (Bottle)', price: 200, category: 'Wines' },
+  { id: 56, name: 'Red Wine (Premium)', price: 250, category: 'Wines' },
+  { id: 57, name: 'White Wine', price: 150, category: 'Wines' },
+
+  { id: 58, name: 'Hennessy VS', price: 1000, category: 'Liquors' },
+  { id: 59, name: 'Hennessy VSOP', price: 1400, category: 'Liquors' },
+  { id: 60, name: 'Martell VSOP', price: 1250, category: 'Liquors' },
+  { id: 61, name: 'Remy Martin', price: 1250, category: 'Liquors' },
+  { id: 62, name: 'Jack Daniels', price: 750, category: 'Liquors' },
+  { id: 63, name: 'Red Label', price: 550, category: 'Liquors' },
+  { id: 64, name: 'Black Label', price: 750, category: 'Liquors' },
 ];
 
 // Payment numbers - Update these with actual numbers
@@ -180,49 +216,111 @@ function updateCart() {
 // Render menu items
 function renderMenuItems() {
   const container = document.getElementById('menu-items');
-  
-  // Group items by category
-  const categories = {};
+
+  const drinkCategoriesSet = new Set([
+    'Beer', 'Cider & Stout', 'Local Beverages', 'Soft Drinks', 'Wines', 'Liquors'
+  ]);
+
+  const foodCategories = {};
+  const drinkCategories = {};
+
   menuItems.forEach(item => {
-    if (!categories[item.category]) {
-      categories[item.category] = [];
-    }
-    categories[item.category].push(item);
+    const target = drinkCategoriesSet.has(item.category) ? drinkCategories : foodCategories;
+    if (!target[item.category]) target[item.category] = [];
+    target[item.category].push(item);
   });
-  
-  // Render each category
-  Object.entries(categories).forEach(([category, items]) => {
-    const categoryEl = document.createElement('div');
-    categoryEl.style.marginBottom = '20px';
-    
-    const titleEl = document.createElement('h3');
-    titleEl.style.cssText = 'margin: 16px 0 12px; color: #8B5E3C; border-bottom: 2px solid #C8A97E; padding-bottom: 8px;';
-    titleEl.textContent = category;
-    categoryEl.appendChild(titleEl);
-    
-    items.forEach(item => {
-      const itemEl = document.createElement('div');
-      itemEl.className = 'menu-item-card';
-      itemEl.innerHTML = `
-        <div class="menu-item-info">
-          <p class="menu-item-name">${item.name}</p>
-          <div class="menu-item-bottom">
-            <p class="menu-item-price">¢${item.price}</p>
-            <div class="menu-item-actions">
-              <input type="number" class="quantity-input" value="1" min="1" data-id="${item.id}">
-              <button class="add-to-cart-btn" data-id="${item.id}">Add</button>
+
+  container.innerHTML = '';
+
+  const createSection = (title, categoriesObj) => {
+    const section = document.createElement('div');
+    section.className = 'menu-section-wrap';
+    section.innerHTML = `
+      <h2 class="menu-section-title">${title}</h2>
+      <div class="menu-accordion"></div>
+    `;
+    const accordion = section.querySelector('.menu-accordion');
+
+    const entries = Object.entries(categoriesObj);
+    entries.forEach(([category, items], index) => {
+      const categoryEl = document.createElement('div');
+      categoryEl.className = 'menu-category';
+      categoryEl.innerHTML = `
+        <button class="category-toggle" aria-expanded="false">
+          <span class="category-title">${category}</span>
+          <span class="category-icon">+</span>
+        </button>
+        <div class="category-items" hidden></div>
+      `;
+
+      const itemsWrap = categoryEl.querySelector('.category-items');
+      items.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'menu-item-card';
+        itemEl.innerHTML = `
+          <div class="menu-item-info">
+            <p class="menu-item-name">${item.name}</p>
+            <div class="menu-item-bottom">
+              <p class="menu-item-price">¢${item.price}</p>
+              <div class="menu-item-actions">
+                <input type="number" class="quantity-input" value="1" min="1" data-id="${item.id}">
+                <button class="add-to-cart-btn" data-id="${item.id}">Add</button>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-      categoryEl.appendChild(itemEl);
+        `;
+        itemsWrap.appendChild(itemEl);
+      });
+
+      accordion.appendChild(categoryEl);
+
+      const toggleBtn = categoryEl.querySelector('.category-toggle');
+      const icon = categoryEl.querySelector('.category-icon');
+
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+        // close siblings for single-open behavior
+        accordion.querySelectorAll('.category-toggle').forEach(btn => {
+          if (btn !== toggleBtn) {
+            btn.setAttribute('aria-expanded', 'false');
+            const siblingItems = btn.parentElement.querySelector('.category-items');
+            const siblingIcon = btn.parentElement.querySelector('.category-icon');
+            siblingItems.hidden = true;
+            siblingItems.style.maxHeight = null;
+            siblingItems.classList.remove('open');
+            siblingIcon.textContent = '+';
+          }
+        });
+
+        if (isOpen) {
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          itemsWrap.hidden = true;
+          itemsWrap.style.maxHeight = null;
+          itemsWrap.classList.remove('open');
+          icon.textContent = '+';
+        } else {
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          itemsWrap.hidden = false;
+          itemsWrap.style.maxHeight = itemsWrap.scrollHeight + 'px';
+          itemsWrap.classList.add('open');
+          icon.textContent = '−';
+        }
+      });
+
+      // Open first category by default for convenience
+      if (index === 0) {
+        toggleBtn.click();
+      }
     });
-    
-    container.appendChild(categoryEl);
-  });
-  
-  // Add event listeners
-  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+
+    container.appendChild(section);
+  };
+
+  createSection('Food Menu', foodCategories);
+  createSection('Drinks Menu', drinkCategories);
+
+  // Wire add-to-cart buttons
+  container.querySelectorAll('.add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const itemId = parseInt(btn.dataset.id);
       const quantityInput = btn.parentElement.querySelector(`input[data-id="${itemId}"]`);

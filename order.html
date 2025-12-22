@@ -67,7 +67,6 @@
           >
             <!-- Menu Items Column -->
             <div class="order-menu-column">
-              <h2>Food Menu</h2>
               <div class="order-menu-items" id="menu-items">
                 <!-- Items will be populated by JavaScript -->
               </div>
@@ -200,10 +199,8 @@
                 </p>
                 <p class="payment-instruction">
                   1. Send payment to the number above<br />
-                  2. After payment, you will receive a transaction confirmation
-                  message<br />
-                  3. Enter your Transaction ID in the form below<br />
-                  4. Your order will be confirmed and delivered
+                  2. Keep your payment confirmation for reference<br />
+                  3. We will process your order and deliver promptly
                 </p>
               </div>
             </div>
@@ -218,23 +215,6 @@
                   placeholder="024XXXXXXX"
                   required
                 />
-              </div>
-
-              <div class="form-group full-span">
-                <label for="transaction-id"
-                  >Transaction ID from Payment Message *</label
-                >
-                <input
-                  type="text"
-                  id="transaction-id"
-                  name="transaction_id"
-                  placeholder="e.g., MTN123456789ABC"
-                  required
-                />
-                <small style="display: block; margin-top: 6px; color: #666"
-                  >This is the confirmation code/reference number from the
-                  payment message you receive after sending payment.</small
-                >
               </div>
 
               <div class="form-group">
@@ -308,12 +288,6 @@
               type="hidden"
               id="hidden-momo-number"
               name="momo_number"
-              value=""
-            />
-            <input
-              type="hidden"
-              id="hidden-transaction-id"
-              name="transaction_id"
               value=""
             />
             <input
@@ -422,8 +396,8 @@
                   <code>0532411380</code> (MTN Mobile Money)
                 </p>
                 <p>
-                  After payment, you will receive a transaction confirmation
-                  message. Reply with the Transaction ID to confirm your order.
+                  After payment, keep your confirmation message for reference.
+                  We will process your order and deliver promptly.
                 </p>
               </div>
 
@@ -533,8 +507,6 @@
               document.getElementById("special-instructions")?.value || "";
             const momoNumber =
               document.getElementById("momo-number")?.value || "";
-            const transactionId =
-              document.getElementById("transaction-id")?.value || "";
             const deliveryType =
               document.getElementById("delivery-type")?.value || "";
 
@@ -544,13 +516,10 @@
               !customerPhone ||
               !deliveryAddress ||
               !momoNumber ||
-              !transactionId ||
               !deliveryType
             ) {
               e.preventDefault();
-              alert(
-                "Please fill in all required fields including Transaction ID"
-              );
+              alert("Please fill in all required fields");
               return;
             }
 
@@ -566,8 +535,6 @@
             document.getElementById("hidden-special-instructions").value =
               specialInstructions;
             document.getElementById("hidden-momo-number").value = momoNumber;
-            document.getElementById("hidden-transaction-id").value =
-              transactionId;
             document.getElementById("hidden-delivery-type").value =
               deliveryType;
           });
